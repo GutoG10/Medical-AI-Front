@@ -1,0 +1,54 @@
+<div class="relative flex h-screen items-center justify-center w-full">
+  <div class="w-full max-w-sm p-6">
+    <form (ngSubmit)="onSubmit()" [formGroup]="newPasswordForm">
+      <img
+        src="assets/backgroundLogin.png"
+        alt="Imagem esquerda"
+        class="rotate-[-180deg] w-[200px] h-[160px]"
+      />
+      <div class="flex items-center">
+        <img src="assets/logo.png" alt="Logo" class="w-44 h-44 ml-3" />
+        <div class="font-bold ml-2 text-[#007CD6] text-left text-3xl font-montserrat leading-tight">
+          <h2>Medical</h2>
+          <h2>AI</h2>
+        </div>
+      </div>
+
+      <p class="mb-8 mt-7 text-center text-[#007CD6]">Crie a sua nova senha</p>
+
+      <div class="w-full mt-10 mb-8">
+        <img
+          src="assets/backgroundLogin.png"
+          alt="Imagem direita"
+          class="place-self-end w-[200px] h-[160px]"
+        />
+      </div>
+      <div>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="placeholder-[#9E9E9E] mb-3 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
+          placeholder="Senha"
+        />
+      </div>
+
+      <div>
+        <input
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          class="placeholder-[#9E9E9E] mb-8 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
+          placeholder="Confirme a senha"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full h-14 rounded-4xl bg-[#007CD6] py-2 text-white font-semibold hover:bg-[#05789b] transition"
+      >
+        Confirmar
+      </button>
+    </form>
+  </div>
+</div>

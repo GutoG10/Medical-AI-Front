@@ -25,22 +25,35 @@
       </div>
       <div>
         <input
-          id="email"
-          type="email"
-          formControlName="email"
+          id="login"
+          type="text"
+          formControlName="login"
           class="placeholder-[#9E9E9E] mb-3 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
           placeholder="E-mail ou código de matrícula"
         />
       </div>
 
       <div>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          class="placeholder-[#9E9E9E] mb-2 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
-          placeholder="Senha"
-        />
+        <div class="relative w-full">
+          <input
+            [type]="mostrarSenha ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Digite sua senha"
+            class="placeholder-[#9E9E9E] mb-3 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 pr-11 py-2 focus:outline-0 focus:border-[#007CD6]"
+          />
+
+          <button
+            type="button"
+            (click)="toggleSenha()"
+            class="absolute inset-y-0 right-0 px-3 flex items-center"
+            aria-label="Alternar visibilidade da senha"
+          >
+            <img
+              [src]="mostrarSenha ? 'assets/senhavisivel.png' : 'assets/senhanaovisivel.png'"
+              alt="Alternar senha"
+            />
+          </button>
+        </div>
       </div>
       <div class="flex mb-8 text-sm text-[#9E9E9E]">
         <input class="mr-1.5 w-5 h-5" type="checkbox" name="lembrar" />
@@ -50,7 +63,7 @@
 
       <button
         type="submit"
-        class="w-full rounded-4xl bg-[#007CD6] py-2 text-white font-semibold hover:bg-[#05789b] transition"
+        class="w-full h-14 rounded-4xl bg-[#007CD6] py-2 text-white font-semibold hover:bg-[#05789b] transition"
       >
         Entrar
       </button>

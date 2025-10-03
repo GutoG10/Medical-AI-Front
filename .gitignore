@@ -5,6 +5,11 @@
 /tmp
 /out-tsc
 /bazel-out
+.env
+compose.yaml
+.dockerignore
+README.Docker.md
+nginx.conf
 
 # Node
 /node_modules
