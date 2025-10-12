@@ -1,0 +1,10 @@
+<div
+  class="flex flex-col space-y-2 text-sm text-[#007CD6] border border-[#D6E4EC] rounded-2xl p-4 w-72"
+>
+  <p class="font-bold mb-4 text-center">{{ titulo() }}</p>
+  @for (opcao of opcoes(); track opcao) {
+  <button class="text-left" (click)="emitir(opcao)">
+    <p>{{ opcao }}</p>
+  </button>
+  }
+</div>

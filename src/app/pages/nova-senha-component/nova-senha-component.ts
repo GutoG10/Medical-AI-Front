@@ -33,31 +33,8 @@ export class NovaSenhaComponent {
     if (this.newPasswordForm.valid) {
       const { password, confirmPassword } = this.newPasswordForm.value;
       if (password === confirmPassword) {
-        console.log('Login Válido!!');
+        this.auth.novaSenha(password);
         this.router.navigate(['dashboard']);
-        if (this.login.includes('@')) {
-          this.auth.login(this.login, password, '').subscribe({
-            next: async () => {
-              const token = await this.auth.generateToken({
-                user: this.login,
-                type: 'email',
-              });
-              this.auth.saveToken(token);
-              this.router.navigate(['dashboard']);
-            },
-          });
-        } else {
-          this.auth.login('', password, this.login).subscribe({
-            next: async () => {
-              const token = await this.auth.generateToken({
-                user: this.login,
-                type: 'code',
-              });
-              this.auth.saveToken(token);
-              this.router.navigate(['dashboard']);
-            },
-          });
-        }
       }
     }
   }

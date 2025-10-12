@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as jose from 'jose';
+import { URL } from '../../environment';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -20,22 +22,45 @@ export class AuthService {
   }
 
   login(email: string, senha: string, codigo: number | string) {
-    return this.http.post('http://localhost:5678/webhook/c11135a5-41d6-43f4-a2ba-381d54a899b4', {
-      email,
-      senha,
-      codigo,
-    });
+    console.log('teste');
+    this.http
+      .post<{ id: string; primeiro_acesso: boolean }>(`${URL.authUrl}`, {
+        email,
+        senha,
+        codigo,
+      })
+      .subscribe({
+        next: async (res) => {
+          localStorage.setItem('usuario_id', res.id);
+          const token = await this.generateToken({
+            id: res.id,
+            email: email,
+            codigo: codigo,
+          });
+          this.saveToken(token);
+          console.log(res.primeiro_acesso);
+          if (res.primeiro_acesso) {
+            this.router.navigate(['nova-senha']);
+          } else {
+            this.router.navigate(['dashboard']);
+          }
+        },
+      });
+  }
+
+  novaSenha(senha: string) {
+    const token = this.getToken();
+    const usuario = jwtDecode<{ id: string }>(token!);
+    const usuario_id = usuario.id;
+
+    return this.http.post(`${URL.authUrl}/alterar-senha`, { usuario_id, senha });
   }
 
   async generateToken(payload: any) {
     const secret = new TextEncoder().encode('d206e0a2e4ff3286b1981bf07784b614');
     const alg = 'HS256';
 
-    return await new jose.SignJWT(payload)
-      .setProtectedHeader({ alg })
-      .setIssuedAt()
-      .setExpirationTime('4h')
-      .sign(secret);
+    return await new jose.SignJWT(payload).setProtectedHeader({ alg }).setIssuedAt().sign(secret);
   }
 
   logout() {

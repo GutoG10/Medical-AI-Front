@@ -7,7 +7,7 @@ import { DashboardComponent } from './pages/dashboard-component/dashboard-compon
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [LoginGuard] },
-  { path: 'nova-senha', component: NovaSenhaComponent, canActivate: [LoginGuard] },
+  { path: 'nova-senha', component: NovaSenhaComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

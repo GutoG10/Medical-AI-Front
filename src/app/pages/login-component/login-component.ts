@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { errors } from 'jose';
 
 @Component({
   selector: 'app-login-component',
@@ -30,41 +29,10 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { login, password }: { login: string; password: string } = this.loginForm.value;
-
-      if (this.novo_usuario) {
-        this.router.navigate(['nova-senha'], { queryParams: { login } });
+      if (login.includes('@')) {
+        this.auth.login(login, password, 0);
       } else {
-        if (login.includes('@')) {
-          this.auth.login(login, password, 0).subscribe({
-            next: async (response: any) => {
-              console.log('Response: ', response);
-              const token = await this.auth.generateToken({
-                user: login,
-                type: 'email',
-              });
-              this.auth.saveToken(token);
-              this.router.navigate(['dashboard']);
-            },
-            error: (errors) => {
-              console.error('Erro ao tentar logar: ', errors);
-            },
-          });
-        } else {
-          this.auth.login('', password, login).subscribe({
-            next: async (response: any) => {
-              console.log('Response: ', response);
-              const token = await this.auth.generateToken({
-                user: login,
-                type: 'code',
-              });
-              this.auth.saveToken(token);
-              this.router.navigate(['dashboard']);
-            },
-            error: (errors) => {
-              console.error('Erro ao tentar logar: ', errors);
-            },
-          });
-        }
+        this.auth.login('', password, login);
       }
     }
   }
