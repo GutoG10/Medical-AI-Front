@@ -28,6 +28,7 @@ export class DashboardComponent implements AfterViewChecked {
 
   messages: Message[] = [];
   newMessage: string = '';
+  newBotMessage: string = '';
   gravando = false;
   recognition: any;
   opcoesSugestao: string[] = ['Casos clínicos', 'Estudar por questões', 'Tirar dúvidas'];
@@ -57,6 +58,15 @@ export class DashboardComponent implements AfterViewChecked {
           },
         });
 
+      this.mensagemService.enviarPrompt(this.newMessage).subscribe({
+        next: (response) => {
+          this.newBotMessage = response.output;
+        },
+        error: (err) => {
+          console.error('Erro ao enviar prompt: ', err);
+        },
+      });
+
       this.newMessage = '';
       this.scrollToBottom();
 
@@ -64,7 +74,7 @@ export class DashboardComponent implements AfterViewChecked {
         this.messages.push({ user: 'bot', text: 'Mensagem Recebida' });
         this.mensagemService
           .enviarMensagem(
-            'Mensagem Recebida',
+            this.newBotMessage,
             false,
             '2e2322dd-5a77-4ce3-b850-0e43bb560dff',
             new Date().toISOString()
