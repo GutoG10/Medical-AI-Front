@@ -33,7 +33,9 @@ export class NovaSenhaComponent {
     if (this.newPasswordForm.valid) {
       const { password, confirmPassword } = this.newPasswordForm.value;
       if (password === confirmPassword) {
-        this.auth.novaSenha(password);
+        this.auth.novaSenha(password).subscribe({
+          next: () => console.log('Nova senha salva com sucesso'),
+        });
         this.router.navigate(['dashboard']);
       }
     }

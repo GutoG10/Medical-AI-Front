@@ -1,5 +1,5 @@
 import { MensagemService } from './../../services/mensagem.service';
-import { Component, ElementRef, ViewChild, AfterViewChecked, NgZone } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewChecked, NgZone, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { HeaderComponent } from '../../components/header-component/header-component';
 import { NgClass } from '@angular/common';
@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { SugestoesComponent } from '../components/sugestoes-component/sugestoes-component';
 
 interface Message {
-  user: string;
+  id?: string;
+  foi_usuario: boolean;
   text: string;
 }
 
@@ -17,7 +18,7 @@ interface Message {
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.css',
 })
-export class DashboardComponent implements AfterViewChecked {
+export class DashboardComponent implements AfterViewChecked, OnInit {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   constructor(
@@ -34,21 +35,29 @@ export class DashboardComponent implements AfterViewChecked {
   opcoesSugestao: string[] = ['Casos clínicos', 'Estudar por questões', 'Tirar dúvidas'];
   tituloSugestao: string = 'O que deseja estudar hoje?';
 
+  ngOnInit(): void {
+    this.mensagemService.buscarMensagens().subscribe({
+      next: (response) => {
+        response.forEach((mensagem) => {
+          this.messages.push({
+            id: mensagem.id,
+            foi_usuario: mensagem.foi_usuario,
+            text: mensagem.texto,
+          });
+        });
+      },
+    });
+  }
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
 
   enviarMensagem() {
     if (this.newMessage.trim() !== '') {
-      this.messages.push({ user: 'me', text: this.newMessage });
+      this.messages.push({ foi_usuario: true, text: this.newMessage });
 
       this.mensagemService
-        .enviarMensagem(
-          this.newMessage,
-          true,
-          '2e2322dd-5a77-4ce3-b850-0e43bb560dff',
-          new Date().toISOString()
-        )
+        .enviarMensagem(this.newMessage, true, new Date().toISOString())
         .subscribe({
           next: (response) => {
             console.log('Mensagem enviada com sucesso: ', response);
@@ -59,8 +68,21 @@ export class DashboardComponent implements AfterViewChecked {
         });
 
       this.mensagemService.enviarPrompt(this.newMessage).subscribe({
-        next: (response) => {
+        next: async (response) => {
           this.newBotMessage = response.output;
+          console.log(response);
+          this.messages.push({ foi_usuario: false, text: this.newBotMessage });
+          this.mensagemService
+            .enviarMensagem(this.newBotMessage, false, new Date().toISOString())
+            .subscribe({
+              next: (response) => {
+                console.log('Mensagem do bot salva: ', response);
+              },
+              error: (error) => {
+                console.error('Erro ao salvar mensagem do bot:', error);
+              },
+            });
+          this.scrollToBottom();
         },
         error: (err) => {
           console.error('Erro ao enviar prompt: ', err);
@@ -69,26 +91,6 @@ export class DashboardComponent implements AfterViewChecked {
 
       this.newMessage = '';
       this.scrollToBottom();
-
-      setTimeout(() => {
-        this.messages.push({ user: 'bot', text: 'Mensagem Recebida' });
-        this.mensagemService
-          .enviarMensagem(
-            this.newBotMessage,
-            false,
-            '2e2322dd-5a77-4ce3-b850-0e43bb560dff',
-            new Date().toISOString()
-          )
-          .subscribe({
-            next: (response) => {
-              console.log('Mensagem do bot salva: ', response);
-            },
-            error: (error) => {
-              console.error('Erro ao salvar mensagem do bot:', error);
-            },
-          });
-        this.scrollToBottom();
-      }, 1000);
     }
   }
 

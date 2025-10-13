@@ -24,20 +24,21 @@ export class AuthService {
   login(email: string, senha: string, codigo: number | string) {
     console.log('teste');
     this.http
-      .post<{ id: string; primeiro_acesso: boolean }>(`${URL.authUrl}`, {
+      .post<{ usuario_id: string; primeiro_acesso: boolean }>(`${URL.authUrl}`, {
         email,
         senha,
         codigo,
       })
       .subscribe({
         next: async (res) => {
-          localStorage.setItem('usuario_id', res.id);
-          const token = await this.generateToken({
-            id: res.id,
-            email: email,
-            codigo: codigo,
-          });
-          this.saveToken(token);
+          localStorage.setItem('usuario_id', res.usuario_id);
+          //const token = await this.generateToken({
+          //  id: res.usuario_id,
+          //  email: email,
+          //  codigo: codigo,
+          //});
+          //this.saveToken(token);
+          console.log(res.usuario_id);
           console.log(res.primeiro_acesso);
           if (res.primeiro_acesso) {
             this.router.navigate(['nova-senha']);
@@ -49,17 +50,15 @@ export class AuthService {
   }
 
   novaSenha(senha: string) {
-    const token = this.getToken();
-    const usuario = jwtDecode<{ id: string }>(token!);
-    const usuario_id = usuario.id;
-
+    const usuario = localStorage.getItem('usuario_id');
+    console.log('teste', usuario);
+    const usuario_id = usuario;
     return this.http.post(`${URL.authUrl}/alterar-senha`, { usuario_id, senha });
   }
 
   async generateToken(payload: any) {
     const secret = new TextEncoder().encode('d206e0a2e4ff3286b1981bf07784b614');
     const alg = 'HS256';
-
     return await new jose.SignJWT(payload).setProtectedHeader({ alg }).setIssuedAt().sign(secret);
   }
 
@@ -69,6 +68,6 @@ export class AuthService {
   }
 
   saveToken(token: string) {
-    //localStorage.setItem(this.tokenKey, token);
+    localStorage.setItem(this.tokenKey, token);
   }
 }

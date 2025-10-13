@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PromptOutput } from '../../interfaces/prompt-output.interface';
+import { UsuarioInterface } from '../../interfaces/usuario.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +9,9 @@ import { PromptOutput } from '../../interfaces/prompt-output.interface';
 export class MensagemService {
   constructor(private http: HttpClient) {}
 
-  enviarMensagem(
-    texto: string,
-    foi_usuario: boolean,
-    usuario_id: string,
-    horario: string,
-    imagem?: string
-  ) {
+  enviarMensagem(texto: string, foi_usuario: boolean, horario: string, imagem?: string) {
     const payload = {
-      usuario_id,
+      usuario_id: localStorage.getItem('usuario_id'),
       horario,
       texto,
       imagem: imagem || '',
@@ -38,6 +33,14 @@ export class MensagemService {
     return this.http.post<PromptOutput>(
       'http://localhost:5678/webhook/f217499f-9fa2-46e8-9283-540736845070',
       payload
+    );
+  }
+
+  buscarMensagens() {
+    return this.http.get<UsuarioInterface[]>(
+      `http://localhost:5678/webhook/cca065d0-f68d-4a70-b9c8-8da4fb5cebee/mensagem/${localStorage.getItem(
+        'usuario_id'
+      )}?limit=50&offset=0`
     );
   }
 }
