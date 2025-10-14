@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as jose from 'jose';
 import { URL } from '../../environment';
 import { jwtDecode } from 'jwt-decode';
 
@@ -18,11 +17,18 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
+    const token = this.getToken();
+    if (!token) return false;
 
+    try {
+      const decoded: any = jwtDecode(token);
+      const exp = decoded.exp * 1000;
+      return Date.now() < exp;
+    } catch {
+      return false;
+    }
+  }
   login(email: string, senha: string, codigo: number | string) {
-    console.log('teste');
     this.http
       .post<{ usuario_id: string; primeiro_acesso: boolean }>(`${URL.authUrl}`, {
         email,
@@ -30,22 +36,22 @@ export class AuthService {
         codigo,
       })
       .subscribe({
-        next: async (res) => {
+        next: (res) => {
           localStorage.setItem('usuario_id', res.usuario_id);
-          //const token = await this.generateToken({
-          //  id: res.usuario_id,
-          //  email: email,
-          //  codigo: codigo,
-          //});
-          //this.saveToken(token);
-          console.log(res.usuario_id);
-          console.log(res.primeiro_acesso);
-          if (res.primeiro_acesso) {
-            this.router.navigate(['nova-senha']);
-          } else {
-            this.router.navigate(['dashboard']);
-          }
+
+          this.generateToken({ id: res.usuario_id, email, codigo }).subscribe({
+            next: (tokenRes) => {
+              this.saveToken(tokenRes.token);
+
+              if (res.primeiro_acesso) {
+                this.router.navigate(['nova-senha']);
+              } else {
+                this.router.navigate(['dashboard']);
+              }
+            },
+          });
         },
+        error: (err) => console.error('Erro no login', err),
       });
   }
 
@@ -56,10 +62,11 @@ export class AuthService {
     return this.http.post(`${URL.authUrl}/alterar-senha`, { usuario_id, senha });
   }
 
-  async generateToken(payload: any) {
-    const secret = new TextEncoder().encode('d206e0a2e4ff3286b1981bf07784b614');
-    const alg = 'HS256';
-    return await new jose.SignJWT(payload).setProtectedHeader({ alg }).setIssuedAt().sign(secret);
+  generateToken(payload: any) {
+    return this.http.post<{ token: string }>(
+      'http://localhost:5678/webhook/62edbe74-24ca-421a-b4f5-48e69d3053f4',
+      payload
+    );
   }
 
   logout() {
