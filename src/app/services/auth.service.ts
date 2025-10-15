@@ -42,8 +42,7 @@ export class AuthService {
           this.generateToken({ id: res.usuario_id, email, codigo }).subscribe({
             next: (tokenRes) => {
               this.saveToken(tokenRes.token);
-
-              if (res.primeiro_acesso) {
+              if (res.primeiro_acesso === true) {
                 this.router.navigate(['nova-senha']);
               } else {
                 this.router.navigate(['dashboard']);

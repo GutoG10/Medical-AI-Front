@@ -5,7 +5,13 @@
     <div class="flex flex-col justify-end min-h-full space-y-2">
       @for (msg of messages; track msg.id) {
       <div class="mb-4" [ngClass]="{ 'text-right': msg.foi_usuario === true }">
-        <div class="inline-block bg-blue-500 text-white px-3 py-2 rounded-lg max-w-xs break-words">
+        <div
+          [ngClass]="{
+            'bg-[#19AA79]': msg.foi_usuario === true,
+            'bg-[#198879]': msg.foi_usuario === false,
+           }"
+          class="inline-block text-white px-3 py-2 rounded-lg max-w-xs break-words"
+        >
           {{ msg.text }}
         </div>
       </div>
@@ -26,14 +32,14 @@
         [(ngModel)]="newMessage"
         (keyup.enter)="enviarMensagem()"
         placeholder="Digite sua mensagem..."
-        class="placeholder-[#007CD6] border-2 text-[#007CD6] text-[14px] w-full border-[#D6E4EC] rounded-4xl px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="placeholder-[#19AA79] border-2 text-[#19AA79] text-[14px] w-full border-[#D6E4EC] rounded-4xl px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#19EE79]"
       />
       <button
         type="button"
         (click)="enviarMensagem()"
         class="absolute inset-y-0 right-3 flex items-center"
       >
-        <img src="assets/send.png" alt="enviar" class="w-5 h-5" />
+        <img src="assets/enviar.png" alt="enviar" class="w-5 h-5" />
       </button>
     </div>
 
@@ -42,7 +48,7 @@
       (click)="toggleGravacao()"
       [ngClass]="{
         'bg-red-600 animate-pulse': gravando,
-        'bg-blue-600': !gravando
+        'bg-[#19AA79]': !gravando
       }"
       class="p-2 rounded-full text-white shadow transition hover:opacity-90"
     >

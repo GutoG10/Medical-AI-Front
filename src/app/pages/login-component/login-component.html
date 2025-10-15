@@ -1,51 +1,39 @@
-<div class="relative flex h-screen items-center justify-center w-full">
-  <div class="w-full max-w-sm p-6">
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <img
-        src="assets/backgroundLogin.png"
-        alt="Imagem esquerda"
-        class="rotate-[-180deg] w-[200px] h-[160px]"
-      />
-      <div class="flex items-center">
-        <img src="assets/logo.png" alt="Logo" class="w-44 h-44 ml-3" />
-        <div class="font-bold ml-2 text-[#007CD6] text-left text-3xl font-montserrat leading-tight">
-          <h2>Medical</h2>
-          <h2>AI</h2>
+<div class="relative flex h-screen items-center justify-center w-full bg-white">
+  <div class="w-full max-w-sm p-6 flex flex-col justify-between h-full">
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="loginForm"
+      class="flex flex-col justify-between h-full"
+    >
+      <!-- Parte de cima: logo e slogan centralizados -->
+      <div class="flex flex-col items-center justify-center flex-grow">
+        <img src="assets/logo2.png" alt="Logo" class="mb-4" />
+        <p class="text-center text-[#19AA79] text-sm">{{ sloganDinamico }}</p>
+      </div>
+
+      <div class="flex flex-col">
+        <div>
+          <input
+            id="login"
+            type="text"
+            formControlName="login"
+            class="placeholder-[#9E9E9E] mb-3 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
+            placeholder="E-mail ou código de matrícula"
+          />
         </div>
-      </div>
 
-      <p class="mb-8 mt-7 text-center text-[#007CD6]">{{ sloganDinamico }}</p>
-
-      <div class="w-full mt-10 mb-8">
-        <img
-          src="assets/backgroundLogin.png"
-          alt="Imagem direita"
-          class="place-self-end w-[200px] h-[160px]"
-        />
-      </div>
-      <div>
-        <input
-          id="login"
-          type="text"
-          formControlName="login"
-          class="placeholder-[#9E9E9E] mb-3 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#007CD6]"
-          placeholder="E-mail ou código de matrícula"
-        />
-      </div>
-
-      <div>
         <div class="relative w-full">
           <input
             [type]="mostrarSenha ? 'text' : 'password'"
             formControlName="password"
             placeholder="Digite sua senha"
-            class="placeholder-[#9E9E9E] mb-3 mt-1 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 pr-11 py-2 focus:outline-0 focus:border-[#007CD6]"
+            class="placeholder-[#9E9E9E] mb-3 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 pr-11 py-2 focus:outline-0 focus:border-[#007CD6]"
           />
 
           <button
             type="button"
             (click)="toggleSenha()"
-            class="absolute inset-y-0 right-0 px-3 flex items-center"
+            class="absolute inset-y-0 mb-3 right-0 px-3 flex items-center"
             aria-label="Alternar visibilidade da senha"
           >
             <img
@@ -54,19 +42,20 @@
             />
           </button>
         </div>
-      </div>
-      <div class="flex mb-8 text-sm text-[#9E9E9E]">
-        <input class="mr-1.5 w-5 h-5" type="checkbox" name="lembrar" />
-        <label class="mr-5" for="lembrar">Lembrar minha senha</label>
-        <a href="#" class="hover:underline focus:text-[#007CD6]">Esqueceu a senha?</a>
-      </div>
 
-      <button
-        type="submit"
-        class="w-full h-14 rounded-4xl bg-[#007CD6] py-2 text-white font-semibold hover:bg-[#05789b] transition"
-      >
-        Entrar
-      </button>
+        <div class="flex mb-5 text-sm text-[#9E9E9E]">
+          <input class="mr-1.5 w-5 h-5" type="checkbox" name="lembrar" />
+          <label class="mr-5" for="lembrar">Lembrar minha senha</label>
+          <a href="#" class="hover:underline focus:text-[#19AA79]">Esqueceu a senha?</a>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full h-14 rounded-4xl bg-[#19AA79] py-2 text-white font-semibold hover:bg-[#00AA79] transition"
+        >
+          Entrar
+        </button>
+      </div>
     </form>
   </div>
 </div>
