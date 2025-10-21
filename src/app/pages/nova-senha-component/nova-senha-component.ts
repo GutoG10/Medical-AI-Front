@@ -40,6 +40,7 @@ export class NovaSenhaComponent {
   }
 
   onSubmit() {
+    console.log("ASDASDASIHDOI");
     if (this.newPasswordForm.valid) {
       const { password, confirmPassword } = this.newPasswordForm.value;
       if (password === confirmPassword) {

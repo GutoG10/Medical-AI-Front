@@ -12,6 +12,5 @@ export class HeaderComponent {
 
   teste() {
     this.auth.logout();
-    console.log('ALOU');
   }
 }

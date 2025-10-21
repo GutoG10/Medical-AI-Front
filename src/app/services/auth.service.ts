@@ -28,6 +28,7 @@ export class AuthService {
       return false;
     }
   }
+
   login(email: string, senha: string, codigo: number | string) {
     this.http
       .post<{ usuario_id: string; primeiro_acesso: boolean }>(`${URL.authUrl}`, {
@@ -42,6 +43,7 @@ export class AuthService {
           this.generateToken({ id: res.usuario_id, email, codigo }).subscribe({
             next: (tokenRes) => {
               this.saveToken(tokenRes.token);
+              console.log("res:", res);
               if (res.primeiro_acesso === true) {
                 this.router.navigate(['nova-senha']);
               } else {
@@ -58,13 +60,22 @@ export class AuthService {
     const usuario = localStorage.getItem('usuario_id');
     console.log('teste', usuario);
     const usuario_id = usuario;
-    return this.http.post(`${URL.authUrl}/alterar-senha`, { usuario_id, senha });
+    return this.http.post(
+      `${URL.authUrl}/alterar-senha`,
+      { usuario_id, senha },
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getToken()}`,
+        },
+      }
+      // { Authorization: this.getToken() }
+    );
   }
 
   generateToken(payload: any) {
     return this.http.post<{ token: string }>(
       'http://localhost:5678/webhook/62edbe74-24ca-421a-b4f5-48e69d3053f4',
-      payload
+      payload,
     );
   }
 
