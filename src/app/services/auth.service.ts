@@ -61,7 +61,8 @@ export class AuthService {
     console.log('teste', usuario);
     const usuario_id = usuario;
     return this.http.post(
-      `${URL.authUrl}/alterar-senha`,
+      // `${URL.authUrl}/alterar-senha`,
+      `${URL.hostUrl}/c11135a5-41d6-43f4-a2ba-381d54a899b4/alterar-senha`,
       { usuario_id, senha },
       {
         headers: {
@@ -74,7 +75,8 @@ export class AuthService {
 
   generateToken(payload: any) {
     return this.http.post<{ token: string }>(
-      'http://localhost:5678/webhook/62edbe74-24ca-421a-b4f5-48e69d3053f4',
+      // 'http://localhost:5678/webhook/62edbe74-24ca-421a-b4f5-48e69d3053f4',
+      `${URL.hostUrl}/62edbe74-24ca-421a-b4f5-48e69d3053f4`,
       payload,
     );
   }
