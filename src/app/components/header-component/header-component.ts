@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   constructor(private auth: AuthService) {}
 
-  teste() {
+  logout() {
     this.auth.logout();
   }
 }

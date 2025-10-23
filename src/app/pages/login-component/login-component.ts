@@ -15,7 +15,11 @@ export class LoginComponent {
   sloganDinamico: string = 'Seu estudo, mais inteligente com IA';
   novo_usuario: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService,
+  ) {
     this.loginForm = this.fb.group({
       login: ['', [Validators.required]],
       password: ['', Validators.required],

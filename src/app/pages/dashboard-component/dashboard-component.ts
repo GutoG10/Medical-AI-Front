@@ -24,9 +24,10 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
   constructor(
     private auth: AuthService,
     private mensagemService: MensagemService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {}
 
+  protected firstMessage = true;
   messages: Message[] = [];
   newMessage: string = '';
   newBotMessage: string = '';
@@ -36,18 +37,19 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
   tituloSugestao: string = 'O que deseja estudar hoje?';
 
   ngOnInit(): void {
-    this.mensagemService.buscarMensagens().subscribe({
-      next: (response) => {
-        response.forEach((mensagem) => {
-          this.messages.push({
-            id: mensagem.id,
-            foi_usuario: mensagem.foi_usuario,
-            text: mensagem.texto,
-          });
-        });
-      },
-    });
+    // this.mensagemService.buscarMensagens().subscribe({
+    //   next: (response) => {
+    //     response.forEach((mensagem) => {
+    //       this.messages.push({
+    //         id: mensagem.id,
+    //         foi_usuario: mensagem.foi_usuario,
+    //         text: mensagem.texto,
+    //       });
+    //     });
+    //   },
+    // });
   }
+
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
@@ -91,6 +93,8 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
 
       this.newMessage = '';
       this.scrollToBottom();
+
+      this.firstMessage = false;
     }
   }
 
@@ -143,6 +147,7 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
           this.newMessage = textoComParcial;
         }
       });
+
     };
 
     this.recognition.onstart = () => {
@@ -161,6 +166,7 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
       this.recognition.stop();
     }
   }
+
   private scrollToBottom(): void {
     try {
       this.scrollContainer.nativeElement.scrollTo({

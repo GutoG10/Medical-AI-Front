@@ -19,7 +19,7 @@ export class NovaSenhaComponent {
     private fb: FormBuilder,
     private router: Router,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe((params) => {
       this.login = params['login'];
@@ -40,7 +40,7 @@ export class NovaSenhaComponent {
   }
 
   onSubmit() {
-    console.log("ASDASDASIHDOI");
+    console.log('ASDASDASIHDOI');
     if (this.newPasswordForm.valid) {
       const { password, confirmPassword } = this.newPasswordForm.value;
       if (password === confirmPassword) {

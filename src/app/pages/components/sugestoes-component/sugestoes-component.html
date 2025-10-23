@@ -3,8 +3,8 @@
 >
   <p class="font-bold mb-4 text-center">{{ titulo() }}</p>
   @for (opcao of opcoes(); track opcao) {
-  <button class="text-left" (click)="emitir(opcao)">
-    <p>{{ opcao }}</p>
-  </button>
+    <button class="text-left" (click)="emitir(opcao)">
+      <p>{{ opcao }}</p>
+    </button>
   }
 </div>
