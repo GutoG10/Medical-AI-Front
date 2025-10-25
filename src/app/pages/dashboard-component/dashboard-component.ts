@@ -5,6 +5,7 @@ import { HeaderComponent } from '../../components/header-component/header-compon
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SugestoesComponent } from '../components/sugestoes-component/sugestoes-component';
+import { MarkdownModule } from 'ngx-markdown';
 
 interface Message {
   id?: string;
@@ -14,7 +15,7 @@ interface Message {
 
 @Component({
   selector: 'app-dashboard-component',
-  imports: [HeaderComponent, NgClass, FormsModule, SugestoesComponent],
+  imports: [HeaderComponent, NgClass, FormsModule, MarkdownModule, SugestoesComponent],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.css',
 })
@@ -28,6 +29,7 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
   ) {}
 
   protected firstMessage = true;
+  protected aiMode?: 'MODO 1' | 'MODO 2' | 'MODO 3';
   messages: Message[] = [];
   newMessage: string = '';
   newBotMessage: string = '';
@@ -37,17 +39,20 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
   tituloSugestao: string = 'O que deseja estudar hoje?';
 
   ngOnInit(): void {
-    // this.mensagemService.buscarMensagens().subscribe({
-    //   next: (response) => {
-    //     response.forEach((mensagem) => {
-    //       this.messages.push({
-    //         id: mensagem.id,
-    //         foi_usuario: mensagem.foi_usuario,
-    //         text: mensagem.texto,
-    //       });
-    //     });
-    //   },
-    // });
+    this.mensagemService.buscarMensagens().subscribe({
+      next: (response) => {
+        if (response) {
+          response.forEach((mensagem) => {
+            console.log('mensagem: ', mensagem);
+            this.messages.push({
+              id: mensagem.id,
+              foi_usuario: mensagem.foi_usuario,
+              text: mensagem.texto,
+            });
+          });
+        }
+      },
+    });
   }
 
   ngAfterViewChecked() {
@@ -69,7 +74,7 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
           },
         });
 
-      this.mensagemService.enviarPrompt(this.newMessage).subscribe({
+      this.mensagemService.enviarPrompt(this.newMessage, this.aiMode).subscribe({
         next: async (response) => {
           this.newBotMessage = response.output;
           console.log(response);
@@ -95,7 +100,33 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
       this.scrollToBottom();
 
       this.firstMessage = false;
+      this.aiMode = undefined;
     }
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTo({
+        top: this.scrollContainer.nativeElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    } catch {}
+  }
+
+  logoutFunc() {
+    this.auth.logout();
+  }
+
+  enviarSugestao(event: string) {
+    this.newMessage = event;
+    const option = this.newMessage.toLowerCase();
+    console.log(option);
+    if (option === 'casos clínicos') this.aiMode = 'MODO 1';
+    else if (option === 'estudar por questões') this.aiMode = 'MODO 2';
+    else this.aiMode = 'MODO 3';
+    console.log(this.aiMode);
+    this.messages = [];
+    this.enviarMensagem();
   }
 
   toggleGravacao() {
@@ -147,7 +178,6 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
           this.newMessage = textoComParcial;
         }
       });
-
     };
 
     this.recognition.onstart = () => {
@@ -165,23 +195,5 @@ export class DashboardComponent implements AfterViewChecked, OnInit {
     if (this.recognition) {
       this.recognition.stop();
     }
-  }
-
-  private scrollToBottom(): void {
-    try {
-      this.scrollContainer.nativeElement.scrollTo({
-        top: this.scrollContainer.nativeElement.scrollHeight,
-        behavior: 'smooth',
-      });
-    } catch {}
-  }
-
-  logoutFunc() {
-    this.auth.logout();
-  }
-
-  enviarSugestao(event: string) {
-    this.newMessage = event;
-    this.enviarMensagem();
   }
 }

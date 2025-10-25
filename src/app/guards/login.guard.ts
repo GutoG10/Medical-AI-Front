@@ -13,7 +13,10 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+  ) {}
 
   canActivate(): boolean {
     if (this.auth.isLoggedIn()) {

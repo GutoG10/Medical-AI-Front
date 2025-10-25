@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   mostrarSenha: boolean = false;
-  sloganDinamico: string = 'Seu estudo, mais inteligente com IA';
+  sloganDinamico: string = 'Plataforma inteligente no ensino médico';
   novo_usuario: boolean = false;
 
   constructor(

@@ -32,12 +32,15 @@ export class MensagemService {
     );
   }
 
-  enviarPrompt(texto: string) {
+  enviarPrompt(texto: string, modo?: 'MODO 1' | 'MODO 2' | 'MODO 3') {
     const payload = {
       usuario_id: localStorage.getItem('usuario_id'),
       prompt: texto,
-      modo: 'MODO 2',
+      modo,
+      // modo: 'MODO 2',
     };
+
+    console.log('Prompt enviado: ', payload);
 
     return this.http.post<PromptOutput>(
       // 'http://localhost:5678/webhook/f217499f-9fa2-46e8-9283-540736845070',
