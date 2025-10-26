@@ -14,9 +14,11 @@
               class="inline-block text-white px-2 py-2 rounded-lg max-w-xs overflow-x-auto"
             >
               @if (msg.foi_usuario) {
+              <div class="text-left">
                 {{ msg.text }}
+                </div>
               } @else {
-                <markdown [data]="msg.text"> </markdown>
+                <markdown class="text-left" [data]="msg.text"> </markdown>
               }
             </div>
           </div>
