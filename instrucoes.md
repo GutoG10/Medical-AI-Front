@@ -1,5 +1,11 @@
 # Instruções para interação com o server e deploy
 
+## Interação com o banco pelo Docker
+
+```sh
+sudo docker exec -ti [ID DO CONTAINER] psql -U postgres -d medical_ai
+```
+
 ## Copiar arquivos do computador local para o servidor
 
 ```sh
