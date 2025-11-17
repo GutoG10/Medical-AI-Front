@@ -1,0 +1,9 @@
+main {
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-left: 0 !important;
+  }
+}

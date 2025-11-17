@@ -1,61 +1,34 @@
 <div class="relative flex h-screen items-center justify-center w-full bg-white">
   <div class="w-full max-w-sm p-6 flex flex-col justify-between h-full">
-    <form
-      (ngSubmit)="onSubmit()"
-      [formGroup]="newPasswordForm"
-      class="flex flex-col justify-between h-full"
-    >
-      <div class="flex flex-col items-center justify-center flex-grow">
+    <form (ngSubmit)="onSubmit()" [formGroup]="newPasswordForm" class="flex flex-col justify-between h-full">
+      <div class="flex flex-col items-center justify-center grow">
         <img src="assets/logo2.png" alt="Logo" class="mb-4" />
         <p class="text-center text-[#19AA79] text-sm font-medium">Crie a sua nova senha</p>
       </div>
 
       <div class="flex flex-col">
         <div class="relative w-full">
-          <input
-            id="password"
-            [type]="mostrarSenha ? 'text' : 'password'"
-            formControlName="password"
+          <input id="password" [type]="mostrarSenha ? 'text' : 'password'" formControlName="password"
             class="placeholder-[#9E9E9E] mb-3 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#19AA79]"
-            placeholder="Senha"
-          />
-          <button
-            type="button"
-            (click)="toggleSenha()"
-            class="absolute inset-y-0 mb-3 right-0 px-3 flex items-center"
-            aria-label="Alternar visibilidade da senha"
-          >
-            <img
-              [src]="mostrarSenha ? 'assets/senhavisivel.png' : 'assets/senhanaovisivel.png'"
-              alt="Alternar senha"
-            />
+            placeholder="Senha" />
+          <button type="button" (click)="toggleSenha()" class="absolute inset-y-0 mb-3 right-0 px-3 flex items-center"
+            aria-label="Alternar visibilidade da senha">
+            <img [src]="mostrarSenha ? 'assets/senhavisivel.png' : 'assets/senhanaovisivel.png'" alt="Alternar senha" />
           </button>
         </div>
         <div class="relative w-full">
-          <input
-            id="confirmPassword"
-            [type]="mostrarConfirmarSenha ? 'text' : 'password'"
+          <input id="confirmPassword" [type]="mostrarConfirmarSenha ? 'text' : 'password'"
             formControlName="confirmPassword"
             class="placeholder-[#9E9E9E] mb-6 block w-full h-14 rounded-lg border border-[#AEC8D4] px-4 py-2 focus:outline-0 focus:border-[#19AA79]"
-            placeholder="Confirme a senha"
-          />
-          <button
-            type="button"
-            (click)="toggleConfirmarSenha()"
-            class="absolute inset-y-0 mb-6 right-0 px-3 flex items-center"
-            aria-label="Alternar visibilidade da senha"
-          >
-            <img
-              [src]="mostrarSenha ? 'assets/senhavisivel.png' : 'assets/senhanaovisivel.png'"
-              alt="Alternar senha"
-            />
+            placeholder="Confirme a senha" />
+          <button type="button" (click)="toggleConfirmarSenha()"
+            class="absolute inset-y-0 mb-6 right-0 px-3 flex items-center" aria-label="Alternar visibilidade da senha">
+            <img [src]="mostrarSenha ? 'assets/senhavisivel.png' : 'assets/senhanaovisivel.png'" alt="Alternar senha" />
           </button>
         </div>
 
-        <button
-          type="submit"
-          class="w-full h-14 rounded-4xl bg-[#19AA79] py-2 text-white font-semibold hover:bg-[#198879] transition"
-        >
+        <button type="submit"
+          class="w-full h-14 rounded-4xl bg-[#19AA79] py-2 text-white font-semibold hover:bg-[#198879] transition">
           Confirmar
         </button>
       </div>
