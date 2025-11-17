@@ -52,9 +52,9 @@ docker rmi [ID DA IMAGEM DO FRONT]
 
 Caso ocorrer um erro como este:
 
-```
+``
 Error response from daemon: conflict: unable to delete 7da8522a8318 (cannot be forced) - image is being used by running container 32136d4738ee
-```
+``
 
 Delete o container que está em depêndencia:
 
@@ -84,3 +84,6 @@ docker run -d --name medical-ai-front \
 
 **OBS**: A flag `--network edge` está setando uma network `edge`, que é compartilhada pelo Caddy (imagem que disponibilza o certificado SSL). O caddy e o front precisam **estar na mesma network**.
 
+# Comando para rodar o projeto em modo de desenvolvimento - Gustavo
+
+docker-compose -f docker-compose.dev.yml up
