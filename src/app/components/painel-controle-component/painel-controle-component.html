@@ -1,0 +1,43 @@
+<div class="h-screen w-full flex" (click)="fecharSidebar($event)">
+
+  <div id="sidebar" class="bg-gray-100 text-black p-4 flex flex-col gap-5 transition-all duration-300 z-20"
+    [ngClass]="sidebarAberta ? 'w-56' : 'w-20'" (click)="manterSidebarAberta($event)">
+
+    <div class="flex items-center justify-center h-8">
+      <img src="assets/logo2.png" />
+    </div>
+
+    <div class="flex flex-col gap-3 mt-3">
+
+      @for(btn of botoes; track btn.nome) {
+      <button (click)="navegar(btn.rota)" class="flex items-center gap-3 p-2 rounded transition-colors"
+        [ngClass]="itemAtivo === btn.nome ? 'bg-gray-300' : 'hover:bg-gray-200'">
+        <img [src]="btn.icone" class="w-8 h-8" />
+        @if(sidebarAberta){
+        <span class="text-sm font-medium">{{ btn.nome }}</span>
+        }
+      </button>
+      }
+
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col">
+
+    <div class="w-full bg-[#19AA79] text-white h-16 flex items-center justify-end px-4">
+      <button class="text-[#19AA79] p-1 rounded">
+        <img src="assets/user.png" class="w-10 h-10" />
+      </button>
+    </div>
+
+    <div class="w-full bg-gray-100 text-black h-16 flex items-center px-6">
+      <h1 class="text-[22px] font-bold">{{ itemAtivo }}</h1>
+    </div>
+
+    <div class="flex-1 bg-white p-6 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
