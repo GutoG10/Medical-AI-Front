@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<div class="flex h-screen bg-gray-100 overflow-hidden relative">
+
+
+  @if(sidebarService.isOpen()) {
+  <div class="fixed inset-0 bg-black/40 lg:hidden z-40 transition-opacity" (click)="sidebarService.close()">
+  </div>
+  }
+  <app-sidebar class="fixed lg:relative left-0 top-0 h-full z-50 w-80
+           transform transition-transform duration-300 ease-in-out
+           bg-white border-r border-gray-200 shadow-lg lg:shadow-none" [ngClass]="{
+      '-translate-x-full lg:translate-x-0': !sidebarService.isOpen(),
+      'translate-x-0': sidebarService.isOpen()
+    }">
+  </app-sidebar>
+
+  <main class="flex-1 overflow-hidden pt-[64px]">
+
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

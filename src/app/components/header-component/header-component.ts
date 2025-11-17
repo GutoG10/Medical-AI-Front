@@ -1,16 +1,20 @@
-import { AuthService } from './../../services/auth.service';
 import { Component } from '@angular/core';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
-  selector: 'app-header-component',
-  imports: [],
+  selector: 'app-header',
+  standalone: true,
   templateUrl: './header-component.html',
-  styleUrl: './header-component.css',
 })
 export class HeaderComponent {
-  constructor(private auth: AuthService) {}
 
-  logout() {
-    this.auth.logout();
+  constructor(private sidebarService: SidebarService) { }
+
+  toggleSidebar() {
+    this.sidebarService.toggle();
+  }
+
+  abrirPerfil() {
+    console.log('Abrir perfil do usuário');
   }
 }

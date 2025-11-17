@@ -1,11 +1,16 @@
-<header class="bg-white shadow-md fixed top-0 left-0 right-0 z-10 w-full">
-  <div class="container mx-auto px-4 py-5 flex justify-between">
-    <!-- <button (click)="logout()"> -->
-    <button>
-      <img src="assets/menu.png" alt="menu" class="h-8 w-8 ml-1" />
+<header class="fixed top-0 left-0 w-full h-[64px] bg-white z-50 shadow">
+
+  <div class="px-4 py-4 flex justify-between items-center">
+
+    <button (click)="toggleSidebar()" class="lg:hidden active:scale-95 transition">
+      <img src="assets/menu.png" class="h-7 w-7" />
     </button>
-    <button (click)="logout()">
-      <img src="assets/perfil2.png" alt="perfil" class="h-8 w-8 mr-1" />
+
+    <div class="font-bold text-[#19AA79] text-lg">Medical AI</div>
+
+    <button (click)="abrirPerfil()" class="active:scale-95 transition">
+      <img src="assets/perfil2.png" class="h-8 w-8" />
     </button>
+
   </div>
 </header>
