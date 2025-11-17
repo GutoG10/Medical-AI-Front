@@ -84,6 +84,6 @@ docker run -d --name medical-ai-front \
 
 **OBS**: A flag `--network edge` está setando uma network `edge`, que é compartilhada pelo Caddy (imagem que disponibilza o certificado SSL). O caddy e o front precisam **estar na mesma network**.
 
-# Comando para rodar o projeto em modo de desenvolvimento - Gustavo
+## Comando para rodar o projeto em modo de desenvolvimento - Gustavo
 
 docker-compose -f docker-compose.dev.yml up
