@@ -6,8 +6,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-nova-senha-component',
   imports: [ReactiveFormsModule],
-  templateUrl: './nova-senha-component.html',
-  styleUrl: './nova-senha-component.css',
+  templateUrl: './nova-senha-component.html'
 })
 export class NovaSenhaComponent {
   newPasswordForm: FormGroup;

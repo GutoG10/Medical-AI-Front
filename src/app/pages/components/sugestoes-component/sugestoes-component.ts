@@ -3,8 +3,7 @@ import { Component, input, output } from '@angular/core';
 @Component({
   selector: 'app-sugestoes-component',
   imports: [],
-  templateUrl: './sugestoes-component.html',
-  styleUrl: './sugestoes-component.css',
+  templateUrl: './sugestoes-component.html'
 })
 export class SugestoesComponent {
   titulo = input<string>('O que deseja estudar?');

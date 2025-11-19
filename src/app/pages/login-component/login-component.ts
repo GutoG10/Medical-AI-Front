@@ -6,8 +6,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login-component',
   imports: [ReactiveFormsModule],
-  templateUrl: './login-component.html',
-  styleUrl: './login-component.css',
+  templateUrl: './login-component.html'
 })
 export class LoginComponent {
   loginForm: FormGroup;

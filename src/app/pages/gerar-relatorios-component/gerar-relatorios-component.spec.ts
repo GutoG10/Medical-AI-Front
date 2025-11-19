@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard-component';
+import { GerarRelatoriosComponent } from './gerar-relatorios-component';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('GerarRelatoriosComponent', () => {
+  let component: GerarRelatoriosComponent;
+  let fixture: ComponentFixture<GerarRelatoriosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent]
+      imports: [GerarRelatoriosComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(GerarRelatoriosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
