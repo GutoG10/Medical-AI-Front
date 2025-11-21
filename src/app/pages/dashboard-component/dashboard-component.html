@@ -1,35 +1,114 @@
 <div class="w-full h-full p-4">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full p-4 border border-gray-300 rounded-lg bg-white"
+  >
+    <div
+      class="w-full max-w-full bg-white flex flex-col items-center justify-center p-4 rounded-lg min-w-0"
+    >
+      <div class="flex items-center gap-2 w-full min-w-0 justify-center">
+        <img class="w-8 h-8 shrink-0" src="assets/usuarios.png" alt="Usuários" />
+        <span class="text-lg font-semibold truncate min-w-0">530</span>
+      </div>
+      <p class="mt-2 text-gray-700 text-sm sm:text-base text-center truncate w-full">Qtd. users</p>
+    </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-gray-100 w-full h-40 justify-items-center">
     <div
-      class="w-full max-w-[300px] flex items-center justify-center bg-white rounded shadow text-sm sm:text-base md:text-lg lg:text-xl">
-      Qtd users
+      class="w-full max-w-full bg-white flex flex-col items-center justify-center p-4 rounded-lg min-w-0"
+    >
+      <div class="flex items-center gap-2 w-full min-w-0 justify-center">
+        <img class="w-8 h-8 shrink-0" src="assets/relatorio.png" />
+        <span class="text-lg font-semibold truncate min-w-0"> Ferramenta mais utilizada </span>
+      </div>
+      <p class="mt-2 text-gray-700 text-sm sm:text-base text-center truncate w-full">
+        Ferramenta mais utilizada
+      </p>
     </div>
+
     <div
-      class="w-full max-w-[300px] flex items-center justify-center bg-white rounded shadow text-sm sm:text-base md:text-lg lg:text-xl text-center">
-      Ferramenta mais utilizada
+      class="w-full max-w-full bg-white flex flex-col items-center justify-center p-4 rounded-lg min-w-0"
+    >
+      <div class="flex items-center gap-2 w-full min-w-0 justify-center">
+        <img class="w-8 h-8 shrink-0" src="assets/subindo.png" alt="Subindo" />
+        <span class="text-lg font-semibold truncate min-w-0">55%</span>
+      </div>
+      <p class="mt-2 text-gray-700 text-sm sm:text-base text-center truncate w-full">
+        Solicitações
+      </p>
     </div>
+
     <div
-      class="w-full max-w-[300px] flex items-center justify-center bg-white rounded shadow text-sm sm:text-base md:text-lg lg:text-xl">
-      Solicitações
-    </div>
-    <div
-      class="w-full max-w-[300px] flex items-center justify-center bg-white rounded shadow text-sm sm:text-base md:text-lg lg:text-xl">
-      Usuários ativos
+      class="w-full max-w-full bg-white flex flex-col items-center justify-center p-4 rounded-lg min-w-0"
+    >
+      <div class="flex items-center gap-2 w-full min-w-0 justify-center">
+        <img class="w-8 h-8 shrink-0 rotate-180" src="assets/descendo.png" />
+        <span class="text-lg font-semibold truncate min-w-0">55%</span>
+      </div>
+      <p class="mt-2 text-gray-700 text-sm sm:text-base text-center truncate w-full">
+        Usuários ativos
+      </p>
     </div>
   </div>
 
-  <div class="w-full h-full p-4 bg-red-500 mt-8">
-
+  <div class="w-full p-4 mt-8">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 justify-items-center">
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">1</div>
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">2</div>
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">3</div>
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">1</div>
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">2</div>
-      <div class="w-full max-w-[800px] h-80 bg-gray-100 ">3</div>
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">
+        <app-grafico-line
+          titulo="Evolução de Solicitações"
+          [labels]="[
+            'Jan',
+            'Fev',
+            'Mar',
+            'Abr',
+            'Mai',
+            'Jun',
+            'Jul',
+            'Ago',
+            'Set',
+            'Out',
+            'Nov',
+            'Dez',
+          ]"
+          [valores]="[42, 55, 48, 60, 45, 70, 62, 53, 49, 65, 59, 72]"
+          corPrimaria="#4A6CF7"
+        >
+        </app-grafico-line>
+      </div>
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">
+        <app-grafico-line
+          titulo="Crescimento de Usuários"
+          [labels]="[
+            'Jan',
+            'Fev',
+            'Mar',
+            'Abr',
+            'Mai',
+            'Jun',
+            'Jul',
+            'Ago',
+            'Set',
+            'Out',
+            'Nov',
+            'Dez',
+          ]"
+          [valores]="[10, 20, 30, 65, 45, 70, 62, 53, 9, 35, 29, 92]"
+          corPrimaria="#4A6CF7"
+        >
+        </app-grafico-line>
+      </div>
+
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">
+        <app-grafico-barra
+          [labels]="['Figma', 'Sketch', 'XD', 'PS', 'AI']"
+          [valores]="[38.07, 69.78, 84.4, 79.96, 52.98]"
+          corPrimaria="#cf9bcc"
+        ></app-grafico-barra>
+      </div>
+
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">
+        <app-grafico-pizza></app-grafico-pizza>
+      </div>
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">2</div>
+      <div class="w-full max-w-[800px] h-[300px] sm:h-[350px] bg-gray-100 p-2 rounded-lg">3</div>
     </div>
-
   </div>
-
 </div>
